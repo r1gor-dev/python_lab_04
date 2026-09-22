@@ -12,7 +12,7 @@ def main():
     logsdir = Path("logs")
     logsdir.mkdir(exist_ok=True)
 
-    a =read_numbers("data/measurements.txt")
+    a =read_numbers(filepath)
     print(calculate_average(a))
     print(find_min(a))
     print(find_max(a))
