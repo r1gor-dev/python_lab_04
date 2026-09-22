@@ -2,10 +2,12 @@ from utils.statistics import calculate_average, find_min, find_max
 from utils.reader import read_numbers, validate_numbers
 from pathlib import Path
 import logging
+import json
 
 def main():
     cur_dir = Path.cwd()
-
+    with open("config.json", "r", encoding="utf-8") as f:
+        config = json.load(f)
     logging.basicConfig(
         filename="logs/app.log",
         level=logging.INFO,
@@ -16,8 +18,10 @@ def main():
 
     print(cur_dir)
 
-    filepath = Path("data/measurements.txt")
-    print(filepath.exists())
+    # filepath = Path("data/measurements.txt")
+    filepath = config["input_file"]
+    logfilepath = config["log_file"]
+    #print(filepath.exists())
 
 
     logsdir = Path("logs")
