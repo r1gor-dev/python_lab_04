@@ -1,9 +1,19 @@
 from utils.statistics import calculate_average, find_min, find_max
 from utils.reader import read_numbers, validate_numbers
 from pathlib import Path
+import logging
 
 def main():
     cur_dir = Path.cwd()
+
+    logging.basicConfig(
+        filename="logs/app.log",
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        encoding="utf-8"
+    )
+    logging.info("RUNNING...")
+
     print(cur_dir)
 
     filepath = Path("data/measurements.txt")
@@ -15,15 +25,19 @@ def main():
     try:
         a =read_numbers(filepath)
         validate_numbers(a)
-        print("all ok.")
+        print("Успешно прочитан файл")
+        logging.info(f"Успешно прочитан файл, прочитано {len(a)} значений.")
+        print(calculate_average(a))
+        print(find_min(a))
+        print(find_max(a))
     except FileNotFoundError:
         print(f"Файл {filepath} не найден.")
+        logging.error(f"Файл {filepath} не найден.")
     except ValueError:
         print(f"Файл {filepath} невозможно прочитать.")
-
-    print(calculate_average(a))
-    print(find_min(a))
-    print(find_max(a))
+        logging.error(f"Файл {filepath} невозможно прочитать.")
+    finally:
+        logging.info("...SHUTTING DOWN...")
 
 # PEP 8 tabs
 if __name__ == "__main__":
