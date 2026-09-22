@@ -11,8 +11,14 @@ def main():
 
     logsdir = Path("logs")
     logsdir.mkdir(exist_ok=True)
+    try:
+        a =read_numbers(filepath)
+        print("all ok.")
+    except FileNotFoundError:
+        print(f"Файл {filepath} не найден.")
+    except ValueError:
+        print(f"Файл {filepath} невозможно прочитать.")
 
-    a =read_numbers(filepath)
     print(calculate_average(a))
     print(find_min(a))
     print(find_max(a))
