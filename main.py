@@ -8,24 +8,23 @@ def main():
     cur_dir = Path.cwd()
     with open("config.json", "r", encoding="utf-8") as f:
         config = json.load(f)
+    
+    filepath = Path(config["input_file"])
+    logfilepath = Path(config["log_file"])
+    logfilepath.parent.mkdir(exist_ok=True)
+
     logging.basicConfig(
-        filename="logs/app.log",
+        filename=logfilepath,
         level=logging.INFO,
         format='%(asctime)s - %(levelname)s - %(message)s',
         encoding="utf-8"
     )
     logging.info("RUNNING...")
 
-    print(cur_dir)
+    if not filepath.exists():
+        print(f"Файл {filepath} не существует.")
+        logging.error(f"Файл {filepath} не существует.")
 
-    # filepath = Path("data/measurements.txt")
-    filepath = config["input_file"]
-    logfilepath = config["log_file"]
-    #print(filepath.exists())
-
-
-    logsdir = Path("logs")
-    logsdir.mkdir(exist_ok=True)
     try:
         a =read_numbers(filepath)
         validate_numbers(a)
