@@ -1,5 +1,5 @@
 from utils.statistics import calculate_average, find_min, find_max
-from utils.reader import read_numbers
+from utils.reader import read_numbers, validate_numbers
 from pathlib import Path
 
 def main():
@@ -9,10 +9,12 @@ def main():
     filepath = Path("data/measurements.txt")
     print(filepath.exists())
 
+
     logsdir = Path("logs")
     logsdir.mkdir(exist_ok=True)
     try:
         a =read_numbers(filepath)
+        validate_numbers(a)
         print("all ok.")
     except FileNotFoundError:
         print(f"Файл {filepath} не найден.")

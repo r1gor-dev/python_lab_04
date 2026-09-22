@@ -6,3 +6,7 @@ def read_numbers(file_path):
             if s:
                 a.append(float(s))
     return a
+
+def validate_numbers(numbers):
+    if not numbers:
+        raise ValueError("Список измерений пуст")
